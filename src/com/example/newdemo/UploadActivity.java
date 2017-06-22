@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -95,11 +96,18 @@ public class UploadActivity extends Activity implements OnClickListener {
 
 	private ProgressDialog dialog;
 
-//	private static String url = "http://192.168.1.101:8080/JsonWeb/login.action?";
-//	private final String url_constant = "http://192.168.1.101:8080/JsonWeb/login.action?";
-	
-	private static String url = "http://192.168.1.101:8080/UploadServlet/UploadServlet?"; 
+	// private static String url =
+	// "http://192.168.1.101:8080/JsonWeb/login.action?";
+	// private final String url_constant =
+	// "http://192.168.1.101:8080/JsonWeb/login.action?";
+
+	private static String url = "http://192.168.1.101:8080/UploadServlet/UploadServlet?";
 	private final String url_constant = "http://192.168.1.101:8080/UploadServlet/UploadServlet?";
+
+	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	String date = dateFormat.format(new java.util.Date());
+	String imagePath = Environment.getExternalStorageDirectory()
+			+ File.separator + "18888888888" + date + ".jpg";
 
 	// 处理消息，让主界面提示上传成功
 	private Handler handler = new Handler() {
@@ -242,8 +250,6 @@ public class UploadActivity extends Activity implements OnClickListener {
 			if (!(record_name.getText().toString().trim().equals(""))) {
 				showProgressDialog();
 
-				 
-				
 				totleInfo.append(type_str).append(',').append(question_str)
 						.append(',').append(detailInfo.getText().toString());
 				totle_str = totleInfo.toString().trim();
@@ -252,16 +258,14 @@ public class UploadActivity extends Activity implements OnClickListener {
 					@Override
 					public void run() {
 						dialog.dismiss();
-						Intent intent = new Intent(UploadActivity.this,
-								MapActivity.class);
-						startActivity(intent);
-						UploadActivity.this.finish();
+						// Intent intent = new Intent(UploadActivity.this,
+						// MapActivity.class);
+						// startActivity(intent);
+						// UploadActivity.this.finish();
 						Message msg = new Message();
 						handler.sendMessage(msg);
 					}
 				}, 5000);
-
-				
 
 				// File file2 = new File("/storage/emulated/0/rightTop.jpg");
 				// HttpUtil.uploadFile(file2, "http://pic.giscloud.ac.cn");
@@ -273,18 +277,22 @@ public class UploadActivity extends Activity implements OnClickListener {
 					@Override
 					public void run() {
 						try {
-							
+
 							String uploadServerUrl = "http://192.168.1.101:8080/UploadServlet/UploadServlet?";
 
-							
-							File file2 = new File(
-									"/storage/emulated/0/rightTop.jpg");
-//							HttpUtil.uploadFile(file2,
-//									"http://pic.giscloud.ac.cn");
-							HttpUtil.uploadFile(file2,uploadServerUrl);
-							
-							
-							
+							imagePath = Environment
+									.getExternalStorageDirectory()
+									+ File.separator
+									+ "18888888888"
+									+ date
+									+ ".jpg";
+							File file2 = new File(imagePath);
+							// File file2 = new File(
+							// "/storage/emulated/0/rightTop.jpg");
+							// HttpUtil.uploadFile(file2,
+							// "http://pic.giscloud.ac.cn");
+							HttpUtil.uploadFile(file2, uploadServerUrl);
+
 							// Your code goes here
 							// String imageFile1 = Environment
 							// .getExternalStorageState().equals(
@@ -297,16 +305,14 @@ public class UploadActivity extends Activity implements OnClickListener {
 							// File file1 = new File(imageFile1);
 							// HttpUtil.uploadFile(file1,
 							// "http://pic.giscloud.ac.cn");
-							
-							
-							String recordName=record_name.getText().toString().trim();
-							String detailinfo=detailInfo.getText().toString().trim();
-							
-//							loginRemoteService("李四", "123");
-							loginRemoteService(recordName, detailinfo);
-							
-							
 
+							String recordName = record_name.getText()
+									.toString().trim();
+							String detailinfo = detailInfo.getText().toString()
+									.trim();
+
+							// loginRemoteService("李四", "123");
+							loginRemoteService(recordName, detailinfo);
 
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -314,7 +320,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 					}
 				});
 
-				 thread.start();
+				thread.start();
 
 			} else {
 				MyToast.showToast(UploadActivity.this, "请设置各项数据");
@@ -336,8 +342,9 @@ public class UploadActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	 private static String urlField="http://192.168.1.101:8080/JsonWeb/login.action?";
-	 private final String url_constant_field="http://192.168.1.101:8080/JsonWeb/login.action?";
+	private static String urlField = "http://192.168.1.101:8080/JsonWeb/login.action?";
+	private final String url_constant_field = "http://192.168.1.101:8080/JsonWeb/login.action?";
+
 	/**
 	 * 获取Struts2 Http 登录的请求信息
 	 * 
@@ -353,8 +360,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 			// 远程登录URL
 			// 下面这句是原有的
 			// processURL=processURL+"userName="+userName+"&password="+password;
-			urlField = url_constant_field + "userName=" + userName + "&password="
-					+ password;
+			urlField = url_constant_field + "userName=" + userName
+					+ "&password=" + password;
 			Log.d("远程URL", urlField);
 			// 创建HttpGet对象
 			HttpGet request = new HttpGet(urlField);
@@ -518,8 +525,10 @@ public class UploadActivity extends Activity implements OnClickListener {
 	private void invokSystemCamera() {
 		Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		if (cameraIntent.resolveActivity(getPackageManager()) != null) {// 判断一个activity是否存在于系统中
+//			photoFile = new File(Environment.getExternalStorageDirectory(),
+//					"temp.jpg");
 			photoFile = new File(Environment.getExternalStorageDirectory(),
-					"temp.jpg");
+					"18888888888"+date + ".jpg");
 			if (photoFile != null) {
 				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,
 						Uri.fromFile(photoFile));
@@ -535,8 +544,10 @@ public class UploadActivity extends Activity implements OnClickListener {
 			switch (requestCode) {
 			case UI_SYSTEM_CAMERA_BACK:
 				// 设置文件保存路径这里放在跟目录下
+//				File picture = new File(
+//						Environment.getExternalStorageDirectory() + "/temp.jpg");
 				File picture = new File(
-						Environment.getExternalStorageDirectory() + "/temp.jpg");
+						Environment.getExternalStorageDirectory() + "/18888888888"+date + ".jpg");
 				startPhotoZoom(Uri.fromFile(picture));
 				break;
 			case UI_PHOTO_ZOOM_BACK:
@@ -582,7 +593,9 @@ public class UploadActivity extends Activity implements OnClickListener {
 			photoIntent.putExtra("return-data", false); // 是否要返回值。 一般都要。否则取的是空值。
 
 			path = Environment.getExternalStorageDirectory() + File.separator;
-			newName = "temp" + ".jpg";
+//			newName = "temp" + ".jpg";
+			newName = "18888888888"+date + ".jpg";
+			
 
 			photoIntent.putExtra(MediaStore.EXTRA_OUTPUT,
 					Uri.fromFile(new File(path + newName)));

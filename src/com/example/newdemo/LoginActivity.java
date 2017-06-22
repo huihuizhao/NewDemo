@@ -86,7 +86,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		case R.id.bt_login:
 			String telephone = et_phone.getText().toString();
 			String password = et_pwd.getText().toString();
-			if (telephone.equals("13800000000") && password.equals("1")) {
+			if (telephone.equals("18888888888") && password.equals("1")) {
 //				editor = pref.edit();
 //				if (remeber_pswd.isChecked()) {
 //					editor.putBoolean("remeberPswd", true);
@@ -96,7 +96,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 //					editor.clear();
 //				}
 //				editor.commit();
-				Intent intent = new Intent(LoginActivity.this, MapActivity.class);
+//				Intent intent = new Intent(LoginActivity.this, MapActivity.class);
+//				startActivity(intent);
+				
+				Intent intent = new Intent(LoginActivity.this, UploadActivity.class);
 				startActivity(intent);
 				LoginActivity.this.finish();
 			} else {
