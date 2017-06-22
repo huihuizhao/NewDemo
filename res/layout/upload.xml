@@ -1,0 +1,132 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical" >
+		
+        <include
+	        android:id="@+id/layout_titlebar"
+	        layout="@layout/titlebar_common"
+	        android:layout_width="fill_parent"
+	        android:layout_height="45dp"
+	        android:layout_alignParentTop="true" 
+	        android:layout_centerVertical="true"/>
+		
+        <RelativeLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content" >
+	        
+	        <Button
+	            android:id="@+id/takePhoto_bt" 
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true"
+		        android:text="拍照" />
+	        
+	        <ImageView
+	            android:id="@+id/image"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_toRightOf="@+id/takePhoto_bt"/>
+	        
+	    </RelativeLayout>
+    
+	    <RelativeLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content" >
+	        
+	        <Button
+	            android:id="@+id/record_bt"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true"
+		        android:text="开始录音" />
+	        
+	        <TextView
+	            android:id="@+id/record_name"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_toRightOf="@+id/record_bt"
+		        android:layout_centerInParent="true" />
+	        
+	    </RelativeLayout>
+	    
+	    <RelativeLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content" >
+	        
+	        <Button
+	            android:id="@+id/play_bt"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true"
+		        android:text="开始播放" />
+	        
+	        <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="此按钮可检查录音是否成功"
+		        android:layout_centerInParent="true"
+		        android:layout_centerHorizontal="true"
+		        android:layout_toRightOf="@+id/play_bt"/>
+	        
+	    </RelativeLayout>
+	    
+	    <RelativeLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content" >
+	        
+	        <Button
+	            android:id="@+id/detail_bt"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true"
+		        android:text="详细信息" />
+	        
+	        <EditText
+	            android:id="@+id/detailInfo"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:maxLines="2"
+		        android:hint="请输入详细信息"
+		        android:focusable="true"
+		        android:layout_toRightOf="@+id/detail_bt" />\
+	        
+	    </RelativeLayout>
+	    
+	    <LinearLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal">
+	        
+	        <Spinner
+	            android:id="@+id/type_spinner"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_vertical"
+	            android:layout_weight="1.0"
+	            android:gravity="center_vertical" />
+	    
+		    <Spinner 
+		        android:id="@+id/question_spinner"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1.0"
+		        android:layout_gravity="center_vertical"
+		        android:gravity="center_vertical"/>
+		    
+	    </LinearLayout>
+	    
+	    
+	    <Button
+	        android:id="@+id/send_bt"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:text="@string/send" />
+    </LinearLayout>
+</ScrollView>
