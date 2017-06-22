@@ -273,6 +273,18 @@ public class UploadActivity extends Activity implements OnClickListener {
 					@Override
 					public void run() {
 						try {
+							
+							String uploadServerUrl = "http://192.168.1.101:8080/UploadServlet/UploadServlet?";
+
+							
+							File file2 = new File(
+									"/storage/emulated/0/rightTop.jpg");
+//							HttpUtil.uploadFile(file2,
+//									"http://pic.giscloud.ac.cn");
+							HttpUtil.uploadFile(file2,uploadServerUrl);
+							
+							
+							
 							// Your code goes here
 							// String imageFile1 = Environment
 							// .getExternalStorageState().equals(
@@ -294,14 +306,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 							loginRemoteService(recordName, detailinfo);
 							
 							
-							 String uploadServerUrl = "http://192.168.1.101:8080/UploadServlet/UploadServlet?";
 
-							
-							File file2 = new File(
-									"/storage/emulated/0/rightTop.jpg");
-//							HttpUtil.uploadFile(file2,
-//									"http://pic.giscloud.ac.cn");
-							HttpUtil.uploadFile(file2,uploadServerUrl);
 
 						} catch (Exception e) {
 							e.printStackTrace();
