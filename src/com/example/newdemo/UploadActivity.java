@@ -107,7 +107,12 @@ public class UploadActivity extends Activity implements OnClickListener {
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	String date = dateFormat.format(new java.util.Date());
 	String imagePath = Environment.getExternalStorageDirectory()
-			+ File.separator + "18888888888" + date + ".jpg";
+			+ File.separator + "18888888888" + "image" + date + ".jpg";
+
+	String voicePath = Environment.getExternalStorageDirectory()
+			+ File.separator + "18888888888" + "voice" + date + ".3gp";
+	String videoPath = Environment.getExternalStorageDirectory()
+			+ File.separator + "18888888888" + "video" + date + ".mp4";
 
 	// 处理消息，让主界面提示上传成功
 	private Handler handler = new Handler() {
@@ -164,7 +169,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 		image.setOnClickListener(this);
 		detailInfo = (EditText) findViewById(R.id.detailInfo);
 		mFileName = Environment.getExternalStorageDirectory().getAbsolutePath()
-				+ "/record.3gp";
+		// + "/record.3gp";
+				+ "/18888888888" + date + ".3gp";
 
 		ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(
 				UploadActivity.this, android.R.layout.simple_spinner_item,
@@ -286,12 +292,21 @@ public class UploadActivity extends Activity implements OnClickListener {
 									+ "18888888888"
 									+ date
 									+ ".jpg";
-							File file2 = new File(imagePath);
+							File fileImage = new File(imagePath);
 							// File file2 = new File(
 							// "/storage/emulated/0/rightTop.jpg");
 							// HttpUtil.uploadFile(file2,
 							// "http://pic.giscloud.ac.cn");
-							HttpUtil.uploadFile(file2, uploadServerUrl);
+							HttpUtil.uploadFile(fileImage, uploadServerUrl);
+
+							voicePath = Environment
+									.getExternalStorageDirectory()
+									+ File.separator
+									+ "18888888888"
+									+ date
+									+ ".3gp";
+							File fileVoice = new File(voicePath);
+							HttpUtil.uploadFile(fileVoice, uploadServerUrl);
 
 							// Your code goes here
 							// String imageFile1 = Environment
@@ -312,7 +327,13 @@ public class UploadActivity extends Activity implements OnClickListener {
 									.trim();
 
 							// loginRemoteService("李四", "123");
-							loginRemoteService(recordName, detailinfo);
+							// loginRemoteService(recordName, detailinfo);
+							imagePath="18888888888" + date + ".jpg";
+							voicePath="18888888888" + date + ".3gp";
+							videoPath="18888888888" + date + ".mp4";
+
+							loginRemoteService("18888888888", date, imagePath,
+									voicePath, videoPath);
 
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -351,7 +372,9 @@ public class UploadActivity extends Activity implements OnClickListener {
 	 * @param userName
 	 * @param password
 	 */
-	public void loginRemoteService(String userName, String password) {
+	public void loginRemoteService(String phonenumber, String date,
+			String imagePath, String voicePath, String videoPath) {
+		// public void loginRemoteService(String userName, String password) {
 		String result = null;
 		try {
 
@@ -360,8 +383,9 @@ public class UploadActivity extends Activity implements OnClickListener {
 			// 远程登录URL
 			// 下面这句是原有的
 			// processURL=processURL+"userName="+userName+"&password="+password;
-			urlField = url_constant_field + "userName=" + userName
-					+ "&password=" + password;
+			urlField = url_constant_field + "phonenumber=" + phonenumber
+					+ "&date=" + date + "&imagePath=" + imagePath
+					+ "&voicePath=" + voicePath + "&videoPath=" + videoPath;
 			Log.d("远程URL", urlField);
 			// 创建HttpGet对象
 			HttpGet request = new HttpGet(urlField);
@@ -525,10 +549,10 @@ public class UploadActivity extends Activity implements OnClickListener {
 	private void invokSystemCamera() {
 		Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		if (cameraIntent.resolveActivity(getPackageManager()) != null) {// 判断一个activity是否存在于系统中
-//			photoFile = new File(Environment.getExternalStorageDirectory(),
-//					"temp.jpg");
+			// photoFile = new File(Environment.getExternalStorageDirectory(),
+			// "temp.jpg");
 			photoFile = new File(Environment.getExternalStorageDirectory(),
-					"18888888888"+date + ".jpg");
+					"18888888888" + date + ".jpg");
 			if (photoFile != null) {
 				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,
 						Uri.fromFile(photoFile));
@@ -544,10 +568,11 @@ public class UploadActivity extends Activity implements OnClickListener {
 			switch (requestCode) {
 			case UI_SYSTEM_CAMERA_BACK:
 				// 设置文件保存路径这里放在跟目录下
-//				File picture = new File(
-//						Environment.getExternalStorageDirectory() + "/temp.jpg");
+				// File picture = new File(
+				// Environment.getExternalStorageDirectory() + "/temp.jpg");
 				File picture = new File(
-						Environment.getExternalStorageDirectory() + "/18888888888"+date + ".jpg");
+						Environment.getExternalStorageDirectory()
+								+ "/18888888888" + date + ".jpg");
 				startPhotoZoom(Uri.fromFile(picture));
 				break;
 			case UI_PHOTO_ZOOM_BACK:
@@ -593,9 +618,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 			photoIntent.putExtra("return-data", false); // 是否要返回值。 一般都要。否则取的是空值。
 
 			path = Environment.getExternalStorageDirectory() + File.separator;
-//			newName = "temp" + ".jpg";
-			newName = "18888888888"+date + ".jpg";
-			
+			// newName = "temp" + ".jpg";
+			newName = "18888888888" + date + ".jpg";
 
 			photoIntent.putExtra(MediaStore.EXTRA_OUTPUT,
 					Uri.fromFile(new File(path + newName)));
