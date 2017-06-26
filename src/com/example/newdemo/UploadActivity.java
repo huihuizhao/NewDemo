@@ -74,7 +74,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 	private ImageView image;
 	private EditText ipInfo;
 	private TextView record_name;
-//	private Spinner type_sp, question_sp;
+	// private Spinner type_sp, question_sp;
 
 	// Spinner中的内容数组
 	private String[] typeArray;
@@ -96,14 +96,15 @@ public class UploadActivity extends Activity implements OnClickListener {
 
 	private ProgressDialog dialog;
 
+	private String urlParameters = "";
+	private String url_constant_field = "";
+	private String uploadServerUrl = "";
 
-	private static String urlParameters = "http://192.168.1.101:8080/JsonWeb/login.action?";
-	private final String url_constant_field = "http://192.168.1.101:8080/JsonWeb/login.action?";
+	// private static String url =
+	// "http://192.168.1.101:8080/JsonWeb/UploadServlet?";
+	// private final String url_constant =
+	// "http://192.168.1.101:8080/JsonWeb/UploadServlet?";
 
-
-//	private static String url = "http://192.168.1.101:8080/JsonWeb/UploadServlet?";
-//	private final String url_constant = "http://192.168.1.101:8080/JsonWeb/UploadServlet?";
-	
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	String date = dateFormat.format(new java.util.Date());
 	String imagePath = Environment.getExternalStorageDirectory()
@@ -154,8 +155,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 		rightBtn.setOnClickListener(this);
 		leftBtn.setOnClickListener(this);
 
-//		type_sp = (Spinner) findViewById(R.id.type_spinner);
-//		question_sp = (Spinner) findViewById(R.id.question_spinner);
+		// type_sp = (Spinner) findViewById(R.id.type_spinner);
+		// question_sp = (Spinner) findViewById(R.id.question_spinner);
 		record_name = (TextView) findViewById(R.id.record_name);
 		takephoto_bt = (Button) findViewById(R.id.takePhoto_bt);
 		record_bt = (Button) findViewById(R.id.record_bt);
@@ -177,43 +178,43 @@ public class UploadActivity extends Activity implements OnClickListener {
 				typeArray);
 		typeAdapter
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//		type_sp.setAdapter(typeAdapter);
+		// type_sp.setAdapter(typeAdapter);
 		ArrayAdapter<String> questionAdapter = new ArrayAdapter<String>(
 				UploadActivity.this, android.R.layout.simple_spinner_item,
 				questionArray);
 		questionAdapter
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//		question_sp.setAdapter(questionAdapter);
-//		type_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
-//			@Override
-//			public void onItemSelected(AdapterView<?> parent, View view,
-//					int position, long id) {
-//				type_str = parent.getItemAtPosition(position).toString();
-//				if (type_str != null && type_str.equals("全部类型")) {
-//					type_str = "";
-//				}
-//			}
-//
-//			@Override
-//			public void onNothingSelected(AdapterView<?> parent) {
-//
-//			}
-//		});
-//		question_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
-//			@Override
-//			public void onItemSelected(AdapterView<?> parent, View view,
-//					int position, long id) {
-//				question_str = parent.getItemAtPosition(position).toString();
-//				if (question_str != null && question_str.equals("全部问题")) {
-//					question_str = "";
-//				}
-//			}
-//
-//			@Override
-//			public void onNothingSelected(AdapterView<?> parent) {
-//
-//			}
-//		});
+		// question_sp.setAdapter(questionAdapter);
+		// type_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
+		// @Override
+		// public void onItemSelected(AdapterView<?> parent, View view,
+		// int position, long id) {
+		// type_str = parent.getItemAtPosition(position).toString();
+		// if (type_str != null && type_str.equals("全部类型")) {
+		// type_str = "";
+		// }
+		// }
+		//
+		// @Override
+		// public void onNothingSelected(AdapterView<?> parent) {
+		//
+		// }
+		// });
+		// question_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
+		// @Override
+		// public void onItemSelected(AdapterView<?> parent, View view,
+		// int position, long id) {
+		// question_str = parent.getItemAtPosition(position).toString();
+		// if (question_str != null && question_str.equals("全部问题")) {
+		// question_str = "";
+		// }
+		// }
+		//
+		// @Override
+		// public void onNothingSelected(AdapterView<?> parent) {
+		//
+		// }
+		// });
 	}
 
 	@Override
@@ -254,6 +255,13 @@ public class UploadActivity extends Activity implements OnClickListener {
 			// && !(record_name.getText().toString().trim().equals(""))
 			// && !(ipInfo.getText().toString().trim().equals(""))) {
 			if (!(record_name.getText().toString().trim().equals(""))) {
+				String ip = ipInfo.getText().toString();
+
+				urlParameters = "http://" + ip + ":8080/JsonWeb/login.action?";
+				url_constant_field = "http://" + ip + ":8080/JsonWeb/login.action?";
+				uploadServerUrl = "http://" + ip
+						+ ":8080/JsonWeb/UploadServlet?";
+
 				showProgressDialog();
 
 				totleInfo.append(type_str).append(',').append(question_str)
@@ -284,7 +292,9 @@ public class UploadActivity extends Activity implements OnClickListener {
 					public void run() {
 						try {
 
-							String uploadServerUrl = "http://192.168.1.101:8080/JsonWeb/UploadServlet?";
+							// String uploadServerUrl =
+							// "http://192.168.1.101:8080/JsonWeb/UploadServlet?";
+
 
 							imagePath = Environment
 									.getExternalStorageDirectory()
@@ -328,9 +338,9 @@ public class UploadActivity extends Activity implements OnClickListener {
 
 							// loginRemoteService("李四", "123");
 							// loginRemoteService(recordName, detailinfo);
-							imagePath="18888888888" + date + ".jpg";
-							voicePath="18888888888" + date + ".3gp";
-							videoPath="18888888888" + date + ".mp4";
+							imagePath = "18888888888" + date + ".jpg";
+							voicePath = "18888888888" + date + ".3gp";
+							videoPath = "18888888888" + date + ".mp4";
 
 							loginRemoteService("18888888888", date, imagePath,
 									voicePath, videoPath);
@@ -354,15 +364,15 @@ public class UploadActivity extends Activity implements OnClickListener {
 			ipInfo.setText("");
 			break;
 		case R.id.btn_titlebar_back:
-//			Intent intent = new Intent(UploadActivity.this, MapActivity.class);
-//			startActivity(intent);
-//			UploadActivity.this.finish();
+			// Intent intent = new Intent(UploadActivity.this,
+			// MapActivity.class);
+			// startActivity(intent);
+			// UploadActivity.this.finish();
 			break;
 		default:
 			break;
 		}
 	}
-
 
 	/**
 	 * 获取Struts2 Http 登录的请求信息
@@ -381,7 +391,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 			// 远程登录URL
 			// 下面这句是原有的
 			// processURL=processURL+"userName="+userName+"&password="+password;
-			urlParameters = url_constant_field + "phonenumber=" + phonenumber
+			urlParameters = url_constant_field + "phoneNumber=" + phonenumber
 					+ "&date=" + date + "&imagePath=" + imagePath
 					+ "&voicePath=" + voicePath + "&videoPath=" + videoPath;
 			Log.d("远程URL", urlParameters);
@@ -630,9 +640,10 @@ public class UploadActivity extends Activity implements OnClickListener {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-//			Intent intent = new Intent(UploadActivity.this, MapActivity.class);
-//			startActivity(intent);
-//			UploadActivity.this.finish();
+			// Intent intent = new Intent(UploadActivity.this,
+			// MapActivity.class);
+			// startActivity(intent);
+			// UploadActivity.this.finish();
 		}
 		return false;
 	}
