@@ -89,7 +89,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 	private MediaPlayer mPlayer = null;// 播放类
 	private boolean mStartRecording = true;
 	private boolean mStartPlaying = true;
-	private static String mFileName = null;
+	private static String mVoiceFileName = null;
 	// 录音后文件
 	private File file;
 	// 照片文件
@@ -107,17 +107,26 @@ public class UploadActivity extends Activity implements OnClickListener {
 	// "http://192.168.1.101:8080/JsonWeb/UploadServlet?";
 
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	String date = dateFormat.format(new java.util.Date());
-	String imagePath = Environment.getExternalStorageDirectory()
-			+ File.separator + "18888888888" + "image" + date + ".jpg";
+	// String time = dateFormat.format(new java.util.Date());
+	Time timeImage = new Time();
+	Time timeVoice = new Time();
+	Time timeVideo = new Time();
+	String strTimeImage;
+	String strTimeVoice;
+	String strTimeVideo;
 
-	String voicePath = Environment.getExternalStorageDirectory()
-			+ File.separator + "18888888888" + "voice" + date + ".wav";
-	String videoPath = Environment.getExternalStorageDirectory()
-			+ File.separator + "18888888888" + "video" + date + ".mp4";
-	
-	AudioSourceMic mAudioSourceMic = new AudioSourceMic(); 
-	
+	// String imagePath = Environment.getExternalStorageDirectory()
+	// + File.separator + "18888888888" +"_"+ "image" + time + ".jpg";
+	//
+	// String voicePath = Environment.getExternalStorageDirectory()
+	// + File.separator + "18888888888" +"_"+ "voice" + time + ".wav";
+	// String videoPath = Environment.getExternalStorageDirectory()
+	// + File.separator + "18888888888" +"_"+ "video" + time + ".mp4";
+	String imagePath;
+	String voicePath;
+	String videoPath;
+
+	AudioSourceMic mAudioSourceMic = new AudioSourceMic();
 
 	// 处理消息，让主界面提示上传成功
 	private Handler handler = new Handler() {
@@ -173,9 +182,10 @@ public class UploadActivity extends Activity implements OnClickListener {
 		image = (ImageView) findViewById(R.id.image);
 		image.setOnClickListener(this);
 		ipInfo = (EditText) findViewById(R.id.ipInfo);
-		mFileName = Environment.getExternalStorageDirectory().getAbsolutePath()
-		// + "/record.wav";
-				+ "/18888888888" + date + ".wav";
+		// mVoiceFileName =
+		// Environment.getExternalStorageDirectory().getAbsolutePath()
+		// // + "/record.wav";
+		// + "/18888888888" + time + ".wav";
 
 		ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(
 				UploadActivity.this, android.R.layout.simple_spinner_item,
@@ -234,6 +244,13 @@ public class UploadActivity extends Activity implements OnClickListener {
 			startActivity(picture);
 			break;
 		case R.id.record_bt:
+
+			timeVoice.setToNow();
+			strTimeVoice = Integer.toString(timeVoice.hour)
+					+ Integer.toString(timeVoice.minute)
+					+ Integer.toString(timeVoice.second);
+			voicePath = Environment.getExternalStorageDirectory()
+					+ File.separator + "18888888888" + strTimeVoice + ".wav";
 			onRecord(mStartRecording);
 			if (mStartRecording) {
 				record_bt.setText("停止录音");
@@ -262,7 +279,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 				String ip = ipInfo.getText().toString();
 
 				urlParameters = "http://" + ip + ":8080/JsonWeb/login.action?";
-				url_constant_field = "http://" + ip + ":8080/JsonWeb/login.action?";
+				url_constant_field = "http://" + ip
+						+ ":8080/JsonWeb/login.action?";
 				uploadServerUrl = "http://" + ip
 						+ ":8080/JsonWeb/UploadServlet?";
 
@@ -299,12 +317,11 @@ public class UploadActivity extends Activity implements OnClickListener {
 							// String uploadServerUrl =
 							// "http://192.168.1.101:8080/JsonWeb/UploadServlet?";
 
-
 							imagePath = Environment
 									.getExternalStorageDirectory()
 									+ File.separator
 									+ "18888888888"
-									+ date
+									+ time
 									+ ".jpg";
 							File fileImage = new File(imagePath);
 							// File file2 = new File(
@@ -313,12 +330,12 @@ public class UploadActivity extends Activity implements OnClickListener {
 							// "http://pic.giscloud.ac.cn");
 							HttpUtil.uploadFile(fileImage, uploadServerUrl);
 
-							voicePath = Environment
-									.getExternalStorageDirectory()
-									+ File.separator
-									+ "18888888888"
-									+ date
-									+ ".wav";
+							// voicePath = Environment
+							// .getExternalStorageDirectory()
+							// + File.separator
+							// + "18888888888"
+							// + time
+							// + ".wav";
 							File fileVoice = new File(voicePath);
 							HttpUtil.uploadFile(fileVoice, uploadServerUrl);
 
@@ -342,11 +359,11 @@ public class UploadActivity extends Activity implements OnClickListener {
 
 							// loginRemoteService("李四", "123");
 							// loginRemoteService(recordName, detailinfo);
-							imagePath = "18888888888" + date + ".jpg";
-							voicePath = "18888888888" + date + ".wav";
-							videoPath = "18888888888" + date + ".mp4";
+//							imagePath = "18888888888" + time + ".jpg";
+//							voicePath = "18888888888" + time + ".wav";
+//							videoPath = "18888888888" + time + ".mp4";
 
-							loginRemoteService("18888888888", date, imagePath,
+							loginRemoteService("18888888888", strTimeVoice, imagePath,
 									voicePath, videoPath);
 
 						} catch (Exception e) {
@@ -384,7 +401,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 	 * @param userName
 	 * @param password
 	 */
-	public void loginRemoteService(String phonenumber, String date,
+	public void loginRemoteService(String phonenumber, String time,
 			String imagePath, String voicePath, String videoPath) {
 		// public void loginRemoteService(String userName, String password) {
 		String result = null;
@@ -396,7 +413,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 			// 下面这句是原有的
 			// processURL=processURL+"userName="+userName+"&password="+password;
 			urlParameters = url_constant_field + "phoneNumber=" + phonenumber
-					+ "&date=" + date + "&imagePath=" + imagePath
+					+ "&time=" + strTimeVoice + "&imagePath=" + imagePath
 					+ "&voicePath=" + voicePath + "&videoPath=" + videoPath;
 			Log.d("远程URL", urlParameters);
 			// 创建HttpGet对象
@@ -470,7 +487,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 		mPlayer = new MediaPlayer();
 		try {
 			// 设置播放路径
-			mPlayer.setDataSource(mFileName);
+			mPlayer.setDataSource(mVoiceFileName);
 			mPlayer.prepare();
 			// 开始
 			mPlayer.start();
@@ -503,40 +520,40 @@ public class UploadActivity extends Activity implements OnClickListener {
 
 	// 开始录音
 	private void startRecord() {
-//		mRecorder = new MediaRecorder();
-//		mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);// 设置音源为Micphone
-//		mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);// 设置封装格式
-//		mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);// 设置编码格式
-//		mRecorder.setOutputFile(mFileName);
-//		file = new File(mFileName);
-//		try {
-//			file.createNewFile();
-//			mRecorder.prepare();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		mRecorder.start();
-		
-		
-//		AudioSourceMic mAudioSourceMic = new AudioSourceMic(); 
+		// mRecorder = new MediaRecorder();
+		// mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);//
+		// 设置音源为Micphone
+		// mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);//
+		// 设置封装格式
+		// mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);//
+		// 设置编码格式
+		// mRecorder.setOutputFile(mFileName);
+		// file = new File(mFileName);
+		// try {
+		// file.createNewFile();
+		// mRecorder.prepare();
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+		// mRecorder.start();
+
+		// AudioSourceMic mAudioSourceMic = new AudioSourceMic();
+		mAudioSourceMic.mRecordfile = voicePath;
 		mAudioSourceMic.Create(16000);
-		if (mAudioSourceMic != null)
-		{
+		if (mAudioSourceMic != null) {
 			mAudioSourceMic.Start();
 		}
-		
-		
-		
+
 	}
 
 	// 停止录音
 	private void stopRecord() {
-//		mRecorder.stop();
-//		mRecorder.release();
-//		mRecorder = null;
+		// mRecorder.stop();
+		// mRecorder.release();
+		// mRecorder = null;
 		// record_name.setText(mFileName.toString());
-//		record_name.setText(file.getName());
-		
+		// record_name.setText(file.getName());
+
 		mAudioSourceMic.Close();
 		record_name.setText(mAudioSourceMic.mRecordfile);
 	}
@@ -578,7 +595,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 			// photoFile = new File(Environment.getExternalStorageDirectory(),
 			// "temp.jpg");
 			photoFile = new File(Environment.getExternalStorageDirectory(),
-					"18888888888" + date + ".jpg");
+					"18888888888" + strTimeVoice + ".jpg");
 			if (photoFile != null) {
 				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,
 						Uri.fromFile(photoFile));
@@ -598,7 +615,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 				// Environment.getExternalStorageDirectory() + "/temp.jpg");
 				File picture = new File(
 						Environment.getExternalStorageDirectory()
-								+ "/18888888888" + date + ".jpg");
+								+ "/18888888888" + strTimeVoice + ".jpg");
 				startPhotoZoom(Uri.fromFile(picture));
 				break;
 			case UI_PHOTO_ZOOM_BACK:
@@ -645,7 +662,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 
 			path = Environment.getExternalStorageDirectory() + File.separator;
 			// newName = "temp" + ".jpg";
-			newName = "18888888888" + date + ".jpg";
+			newName = "18888888888" + strTimeVoice + ".jpg";
 
 			photoIntent.putExtra(MediaStore.EXTRA_OUTPUT,
 					Uri.fromFile(new File(path + newName)));

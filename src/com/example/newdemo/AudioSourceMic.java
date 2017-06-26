@@ -150,9 +150,9 @@ public class AudioSourceMic
 				t.setToNow();
 				
 //				mRecordfile = "/mnt/sdcard/out_"+t.hour+"_"+t.minute+"_"+t.second+".wav"; 
-				mRecordfile = Environment.getExternalStorageDirectory().getAbsolutePath()
-						// + "/record.wav";
-								+ "/18888888888" + "2017-06-27" + ".wav";
+//				mRecordfile = Environment.getExternalStorageDirectory().getAbsolutePath()
+//						// + "/record.wav";
+//								+ "/18888888888" + "2017-06-27" + ".wav";
 				File f = new File(mRecordfile);
 				if(f.exists()){
 					f.delete();
