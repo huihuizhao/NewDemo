@@ -18,6 +18,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.newdemo.AudioSourceMic;
 import com.example.newdemo.net.HttpUtil;
 import com.example.newdemo.util.MyLog;
 import com.example.newdemo.util.MyToast;
@@ -111,9 +112,12 @@ public class UploadActivity extends Activity implements OnClickListener {
 			+ File.separator + "18888888888" + "image" + date + ".jpg";
 
 	String voicePath = Environment.getExternalStorageDirectory()
-			+ File.separator + "18888888888" + "voice" + date + ".3gp";
+			+ File.separator + "18888888888" + "voice" + date + ".wav";
 	String videoPath = Environment.getExternalStorageDirectory()
 			+ File.separator + "18888888888" + "video" + date + ".mp4";
+	
+	AudioSourceMic mAudioSourceMic = new AudioSourceMic(); 
+	
 
 	// 处理消息，让主界面提示上传成功
 	private Handler handler = new Handler() {
@@ -170,8 +174,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 		image.setOnClickListener(this);
 		ipInfo = (EditText) findViewById(R.id.ipInfo);
 		mFileName = Environment.getExternalStorageDirectory().getAbsolutePath()
-		// + "/record.3gp";
-				+ "/18888888888" + date + ".3gp";
+		// + "/record.wav";
+				+ "/18888888888" + date + ".wav";
 
 		ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(
 				UploadActivity.this, android.R.layout.simple_spinner_item,
@@ -314,7 +318,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 									+ File.separator
 									+ "18888888888"
 									+ date
-									+ ".3gp";
+									+ ".wav";
 							File fileVoice = new File(voicePath);
 							HttpUtil.uploadFile(fileVoice, uploadServerUrl);
 
@@ -339,7 +343,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 							// loginRemoteService("李四", "123");
 							// loginRemoteService(recordName, detailinfo);
 							imagePath = "18888888888" + date + ".jpg";
-							voicePath = "18888888888" + date + ".3gp";
+							voicePath = "18888888888" + date + ".wav";
 							videoPath = "18888888888" + date + ".mp4";
 
 							loginRemoteService("18888888888", date, imagePath,
@@ -499,28 +503,42 @@ public class UploadActivity extends Activity implements OnClickListener {
 
 	// 开始录音
 	private void startRecord() {
-		mRecorder = new MediaRecorder();
-		mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);// 设置音源为Micphone
-		mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);// 设置封装格式
-		mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);// 设置编码格式
-		mRecorder.setOutputFile(mFileName);
-		file = new File(mFileName);
-		try {
-			file.createNewFile();
-			mRecorder.prepare();
-		} catch (IOException e) {
-			e.printStackTrace();
+//		mRecorder = new MediaRecorder();
+//		mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);// 设置音源为Micphone
+//		mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);// 设置封装格式
+//		mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);// 设置编码格式
+//		mRecorder.setOutputFile(mFileName);
+//		file = new File(mFileName);
+//		try {
+//			file.createNewFile();
+//			mRecorder.prepare();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		mRecorder.start();
+		
+		
+//		AudioSourceMic mAudioSourceMic = new AudioSourceMic(); 
+		mAudioSourceMic.Create(16000);
+		if (mAudioSourceMic != null)
+		{
+			mAudioSourceMic.Start();
 		}
-		mRecorder.start();
+		
+		
+		
 	}
 
 	// 停止录音
 	private void stopRecord() {
-		mRecorder.stop();
-		mRecorder.release();
-		mRecorder = null;
+//		mRecorder.stop();
+//		mRecorder.release();
+//		mRecorder = null;
 		// record_name.setText(mFileName.toString());
-		record_name.setText(file.getName());
+//		record_name.setText(file.getName());
+		
+		mAudioSourceMic.Close();
+		record_name.setText(mAudioSourceMic.mRecordfile);
 	}
 
 	@Override
