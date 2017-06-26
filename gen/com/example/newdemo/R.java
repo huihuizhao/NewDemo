@@ -178,7 +178,7 @@ public final class R {
         public static final int trans=0x7f020022;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b0027;
+        public static final int action_settings=0x7f0b0025;
         public static final int bmapView=0x7f0b000f;
         public static final int bt_login=0x7f0b0006;
         public static final int bt_register=0x7f0b0007;
@@ -205,18 +205,16 @@ public final class R {
         public static final int progress_image=0x7f0b0012;
         public static final int pswd_et=0x7f0b000c;
         public static final int pswd_tv=0x7f0b000b;
-        public static final int question_spinner=0x7f0b0025;
         public static final int record_bt=0x7f0b001f;
         public static final int record_name=0x7f0b0020;
         public static final int remeber_pswd=0x7f0b000d;
         public static final int request=0x7f0b0010;
-        public static final int send_bt=0x7f0b0026;
+        public static final int send_bt=0x7f0b0024;
         public static final int takePhoto_bt=0x7f0b001d;
         public static final int tel_et=0x7f0b000a;
         public static final int tel_tv=0x7f0b0009;
         public static final int tv_forget_pwd=0x7f0b0005;
         public static final int tv_titlebar_title=0x7f0b001c;
-        public static final int type_spinner=0x7f0b0024;
         public static final int zoom_image_view=0x7f0b0011;
     }
     public static final class layout {
