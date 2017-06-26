@@ -72,7 +72,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 	private Button mPlayButton;
 	private Button send_bt;
 	private ImageView image;
-	private EditText detailInfo;
+	private EditText ipInfo;
 	private TextView record_name;
 //	private Spinner type_sp, question_sp;
 
@@ -96,13 +96,10 @@ public class UploadActivity extends Activity implements OnClickListener {
 
 	private ProgressDialog dialog;
 
-	// private static String url =
-	// "http://192.168.1.101:8080/JsonWeb/login.action?";
-	// private final String url_constant =
-	// "http://192.168.1.101:8080/JsonWeb/login.action?";
 
-//	private static String url = "http://192.168.1.101:8080/UploadServlet/UploadServlet?";
-//	private final String url_constant = "http://192.168.1.101:8080/UploadServlet/UploadServlet?";
+	private static String urlParameters = "http://192.168.1.101:8080/JsonWeb/login.action?";
+	private final String url_constant_field = "http://192.168.1.101:8080/JsonWeb/login.action?";
+
 
 //	private static String url = "http://192.168.1.101:8080/JsonWeb/UploadServlet?";
 //	private final String url_constant = "http://192.168.1.101:8080/JsonWeb/UploadServlet?";
@@ -170,7 +167,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 		send_bt.setOnClickListener(this);
 		image = (ImageView) findViewById(R.id.image);
 		image.setOnClickListener(this);
-		detailInfo = (EditText) findViewById(R.id.detailInfo);
+		ipInfo = (EditText) findViewById(R.id.ipInfo);
 		mFileName = Environment.getExternalStorageDirectory().getAbsolutePath()
 		// + "/record.3gp";
 				+ "/18888888888" + date + ".3gp";
@@ -255,12 +252,12 @@ public class UploadActivity extends Activity implements OnClickListener {
 		case R.id.send_bt:
 			// if (!(image.getDrawable() == null)
 			// && !(record_name.getText().toString().trim().equals(""))
-			// && !(detailInfo.getText().toString().trim().equals(""))) {
+			// && !(ipInfo.getText().toString().trim().equals(""))) {
 			if (!(record_name.getText().toString().trim().equals(""))) {
 				showProgressDialog();
 
 				totleInfo.append(type_str).append(',').append(question_str)
-						.append(',').append(detailInfo.getText().toString());
+						.append(',').append(ipInfo.getText().toString());
 				totle_str = totleInfo.toString().trim();
 				Timer timer = new Timer();
 				timer.schedule(new TimerTask() {
@@ -287,8 +284,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 					public void run() {
 						try {
 
-//							String uploadServerUrl = "http://192.168.1.101:8080/UploadServlet/UploadServlet?";
-							String uploadServerUrl = "http://192.168.0.132:8080/JsonWeb/UploadServlet?";
+							String uploadServerUrl = "http://192.168.1.101:8080/JsonWeb/UploadServlet?";
 
 							imagePath = Environment
 									.getExternalStorageDirectory()
@@ -327,7 +323,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 
 							String recordName = record_name.getText()
 									.toString().trim();
-							String detailinfo = detailInfo.getText().toString()
+							String detailinfo = ipInfo.getText().toString()
 									.trim();
 
 							// loginRemoteService("李四", "123");
@@ -355,7 +351,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 			takephoto_bt.setText("拍照");
 			image.setImageBitmap(null);
 			record_name.setText("");
-			detailInfo.setText("");
+			ipInfo.setText("");
 			break;
 		case R.id.btn_titlebar_back:
 //			Intent intent = new Intent(UploadActivity.this, MapActivity.class);
@@ -367,8 +363,6 @@ public class UploadActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	private static String urlField = "http://192.168.0.132:8080/JsonWeb/login.action?";
-	private final String url_constant_field = "http://192.168.0.132:8080/JsonWeb/login.action?";
 
 	/**
 	 * 获取Struts2 Http 登录的请求信息
@@ -387,12 +381,12 @@ public class UploadActivity extends Activity implements OnClickListener {
 			// 远程登录URL
 			// 下面这句是原有的
 			// processURL=processURL+"userName="+userName+"&password="+password;
-			urlField = url_constant_field + "phonenumber=" + phonenumber
+			urlParameters = url_constant_field + "phonenumber=" + phonenumber
 					+ "&date=" + date + "&imagePath=" + imagePath
 					+ "&voicePath=" + voicePath + "&videoPath=" + videoPath;
-			Log.d("远程URL", urlField);
+			Log.d("远程URL", urlParameters);
 			// 创建HttpGet对象
-			HttpGet request = new HttpGet(urlField);
+			HttpGet request = new HttpGet(urlParameters);
 			// 请求信息类型MIME每种响应类型的输出（普通文本、html 和 XML，json）。允许的响应类型应当匹配资源类中生成的 MIME
 			// 类型
 			// 资源类生成的 MIME 类型应当匹配一种可接受的 MIME 类型。如果生成的 MIME 类型和可接受的 MIME 类型不

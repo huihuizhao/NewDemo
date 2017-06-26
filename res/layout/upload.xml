@@ -82,18 +82,18 @@
 	        android:layout_height="wrap_content" >
 	        
 	        <Button
-	            android:id="@+id/detail_bt"
+	            android:id="@+id/ip_bt"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_alignParentLeft="true"
-		        android:text="详细信息" />
+		        android:text="IP地址" />
 	        
 	        <EditText
-	            android:id="@+id/detailInfo"
+	            android:id="@+id/ipInfo"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
 		        android:maxLines="2"
-		        android:hint="请输入详细信息"
+		        android:hint="请输IP地址"
 		        android:focusable="true"
 		        android:layout_toRightOf="@+id/detail_bt" />\
 	        
