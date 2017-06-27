@@ -195,7 +195,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 			// + Integer.toString(timeImage.minute)
 			// + Integer.toString(timeImage.second);
 
-			strTimeImage = timeImage.format("%Y%m%dT%H%M%S");
+			strTimeImage = timeImage.format("%Y%m%d%H%M%S");
 			imagePath = Environment.getExternalStorageDirectory()
 					+ File.separator + "18888888888" + strTimeImage + ".jpg";
 
@@ -204,39 +204,41 @@ public class UploadActivity extends Activity implements OnClickListener {
 		case R.id.image:
 			Intent picture = new Intent(UploadActivity.this,
 					PhotoActivity.class);
-			picture.putExtra("photo", path + newName);
+			picture.putExtra("photo", imagePath);
 			startActivity(picture);
 			break;
 		case R.id.record_bt:
-
-			timeVoice.setToNow();
-			strTimeVoice = timeVoice.format("%Y%m%dT%H%M%S");
-			voicePath = Environment.getExternalStorageDirectory()
-					+ File.separator + "18888888888" + strTimeVoice + ".wav";
-			onRecord(mStartRecording);
+			
 			if (mStartRecording) {
+				timeVoice.setToNow();
+				strTimeVoice = timeVoice.format("%Y%m%d%H%M%S");
+				voicePath = Environment.getExternalStorageDirectory()
+						+ File.separator + "18888888888" + strTimeVoice
+						+ ".wav";
 				record_bt.setText("停止录音");
 			} else {
 				record_bt.setText("开始录音");
 			}
+			
+			onRecord(mStartRecording);
 			mStartRecording = !mStartRecording;
 			break;
 		case R.id.play_bt:
-//			if (!(record_name.getText().equals(""))
-//					&& (record_name.getText().toString().trim() != null)) {
-//				onPlay(mStartPlaying);
-//				if (mStartPlaying) {
-//					mPlayButton.setText("停止播放");
-//				} else {
-//					mPlayButton.setText("开始播放");
-//				}
-//				mStartPlaying = !mStartPlaying;
-//			}
-			Intent videoIntent = new Intent(UploadActivity.this, VideoActivity.class);
+			// if (!(record_name.getText().equals(""))
+			// && (record_name.getText().toString().trim() != null)) {
+			// onPlay(mStartPlaying);
+			// if (mStartPlaying) {
+			// mPlayButton.setText("停止播放");
+			// } else {
+			// mPlayButton.setText("开始播放");
+			// }
+			// mStartPlaying = !mStartPlaying;
+			// }
+			Intent videoIntent = new Intent(UploadActivity.this,
+					VideoActivity.class);
 			startActivity(videoIntent);
 			UploadActivity.this.finish();
-			
-			
+
 			break;
 		case R.id.send_bt:
 			// if (!(image.getDrawable() == null)
@@ -512,8 +514,9 @@ public class UploadActivity extends Activity implements OnClickListener {
 		if (cameraIntent.resolveActivity(getPackageManager()) != null) {// 判断一个activity是否存在于系统中
 			// photoFile = new File(Environment.getExternalStorageDirectory(),
 			// "temp.jpg");
-			photoFile = new File(Environment.getExternalStorageDirectory(),
-					"18888888888" + strTimeVoice + ".jpg");
+			// photoFile = new File(Environment.getExternalStorageDirectory(),
+			// "18888888888" + strTimeVoice + ".jpg");
+			photoFile = new File(imagePath);
 			if (photoFile != null) {
 				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,
 						Uri.fromFile(photoFile));
@@ -529,17 +532,16 @@ public class UploadActivity extends Activity implements OnClickListener {
 			switch (requestCode) {
 			case UI_SYSTEM_CAMERA_BACK:
 				// 设置文件保存路径这里放在跟目录下
+				File picture = new File(imagePath);
 				// File picture = new File(
-				// Environment.getExternalStorageDirectory() + "/temp.jpg");
-				File picture = new File(
-						Environment.getExternalStorageDirectory()
-								+ "/18888888888" + strTimeVoice + ".jpg");
+				// Environment.getExternalStorageDirectory()
+				// + "/18888888888" + strTimeVoice + ".jpg");
 				startPhotoZoom(Uri.fromFile(picture));
 				break;
 			case UI_PHOTO_ZOOM_BACK:
-				File file = new File(path + newName);
+				File file = new File(imagePath);
 				if (file.exists()) {
-					Bitmap photo = BitmapFactory.decodeFile(path + newName);
+					Bitmap photo = BitmapFactory.decodeFile(imagePath);
 					// photo.compress(CompressFormat.JPEG, 100, new
 					// FileOutputStream(file));
 					image.setImageBitmap(photo);
@@ -578,12 +580,15 @@ public class UploadActivity extends Activity implements OnClickListener {
 			// 如果你需要特定的比例去裁剪图片，那么这个一定要去掉，因为它会破坏掉特定的比例。
 			photoIntent.putExtra("return-data", false); // 是否要返回值。 一般都要。否则取的是空值。
 
-			path = Environment.getExternalStorageDirectory() + File.separator;
-			// newName = "temp" + ".jpg";
-			newName = "18888888888" + strTimeVoice + ".jpg";
+			// path = Environment.getExternalStorageDirectory() +
+			// File.separator;
+			// // newName = "temp" + ".jpg";
+			// newName = "18888888888" + strTimeVoice + ".jpg";
 
+			// photoIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+			// Uri.fromFile(new File(path + newName)));
 			photoIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-					Uri.fromFile(new File(path + newName)));
+					Uri.fromFile(new File(imagePath)));
 			startActivityForResult(photoIntent, UI_PHOTO_ZOOM_BACK);
 		} catch (Exception e) {
 			e.printStackTrace();

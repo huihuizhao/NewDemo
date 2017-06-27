@@ -34,7 +34,8 @@ public class AudioSourceMic
 	
 	// for test
 	private boolean isRecordToWav = true;
-	String mRecordfile = "/mnt/sdcard/out.wav";
+//	String mRecordfile = "/mnt/sdcard/out.wav";
+	String mRecordfile;
 	private static RandomAccessFile randomAccessWriter = null;
 	private static int  payloadSize = 0;
 
