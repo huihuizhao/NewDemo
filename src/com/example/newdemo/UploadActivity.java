@@ -98,16 +98,11 @@ public class UploadActivity extends Activity implements OnClickListener {
 	private ProgressDialog dialog;
 
 	private String urlParameters = "";
-	private String url_constant_field = "";
+	private String url_constant_parameters = "";
 	private String uploadServerUrl = "";
 
-	// private static String url =
-	// "http://192.168.1.101:8080/JsonWeb/UploadServlet?";
-	// private final String url_constant =
-	// "http://192.168.1.101:8080/JsonWeb/UploadServlet?";
-
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	// String time = dateFormat.format(new java.util.Date());
+	String date = dateFormat.format(new java.util.Date());
 	Time timeImage = new Time();
 	Time timeVoice = new Time();
 	Time timeVideo = new Time();
@@ -115,13 +110,6 @@ public class UploadActivity extends Activity implements OnClickListener {
 	String strTimeVoice;
 	String strTimeVideo;
 
-	// String imagePath = Environment.getExternalStorageDirectory()
-	// + File.separator + "18888888888" +"_"+ "image" + time + ".jpg";
-	//
-	// String voicePath = Environment.getExternalStorageDirectory()
-	// + File.separator + "18888888888" +"_"+ "voice" + time + ".wav";
-	// String videoPath = Environment.getExternalStorageDirectory()
-	// + File.separator + "18888888888" +"_"+ "video" + time + ".mp4";
 	String imagePath;
 	String voicePath;
 	String videoPath;
@@ -182,10 +170,6 @@ public class UploadActivity extends Activity implements OnClickListener {
 		image = (ImageView) findViewById(R.id.image);
 		image.setOnClickListener(this);
 		ipInfo = (EditText) findViewById(R.id.ipInfo);
-		// mVoiceFileName =
-		// Environment.getExternalStorageDirectory().getAbsolutePath()
-		// // + "/record.wav";
-		// + "/18888888888" + time + ".wav";
 
 		ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(
 				UploadActivity.this, android.R.layout.simple_spinner_item,
@@ -198,43 +182,23 @@ public class UploadActivity extends Activity implements OnClickListener {
 				questionArray);
 		questionAdapter
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		// question_sp.setAdapter(questionAdapter);
-		// type_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
-		// @Override
-		// public void onItemSelected(AdapterView<?> parent, View view,
-		// int position, long id) {
-		// type_str = parent.getItemAtPosition(position).toString();
-		// if (type_str != null && type_str.equals("全部类型")) {
-		// type_str = "";
-		// }
-		// }
-		//
-		// @Override
-		// public void onNothingSelected(AdapterView<?> parent) {
-		//
-		// }
-		// });
-		// question_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
-		// @Override
-		// public void onItemSelected(AdapterView<?> parent, View view,
-		// int position, long id) {
-		// question_str = parent.getItemAtPosition(position).toString();
-		// if (question_str != null && question_str.equals("全部问题")) {
-		// question_str = "";
-		// }
-		// }
-		//
-		// @Override
-		// public void onNothingSelected(AdapterView<?> parent) {
-		//
-		// }
-		// });
+
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.takePhoto_bt:
+
+			timeImage.setToNow();
+			// strTimeImage = Integer.toString(timeImage.hour)
+			// + Integer.toString(timeImage.minute)
+			// + Integer.toString(timeImage.second);
+
+			strTimeImage = timeImage.format("%Y%m%dT%H%M%S");
+			imagePath = Environment.getExternalStorageDirectory()
+					+ File.separator + "18888888888" + strTimeImage + ".jpg";
+
 			invokSystemCamera();
 			break;
 		case R.id.image:
@@ -246,9 +210,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 		case R.id.record_bt:
 
 			timeVoice.setToNow();
-			strTimeVoice = Integer.toString(timeVoice.hour)
-					+ Integer.toString(timeVoice.minute)
-					+ Integer.toString(timeVoice.second);
+			strTimeVoice = timeVoice.format("%Y%m%dT%H%M%S");
 			voicePath = Environment.getExternalStorageDirectory()
 					+ File.separator + "18888888888" + strTimeVoice + ".wav";
 			onRecord(mStartRecording);
@@ -279,7 +241,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 				String ip = ipInfo.getText().toString();
 
 				urlParameters = "http://" + ip + ":8080/JsonWeb/login.action?";
-				url_constant_field = "http://" + ip
+				url_constant_parameters = "http://" + ip
 						+ ":8080/JsonWeb/login.action?";
 				uploadServerUrl = "http://" + ip
 						+ ":8080/JsonWeb/UploadServlet?";
@@ -303,67 +265,19 @@ public class UploadActivity extends Activity implements OnClickListener {
 					}
 				}, 5000);
 
-				// File file2 = new File("/storage/emulated/0/rightTop.jpg");
-				// HttpUtil.uploadFile(file2, "http://pic.giscloud.ac.cn");
-
-				// HttpUtil.postInfoToServer(UploadActivity.this, mFileName,
-				// newName , totle_str);
-
 				Thread thread = new Thread(new Runnable() {
 					@Override
 					public void run() {
 						try {
-
-							// String uploadServerUrl =
-							// "http://192.168.1.101:8080/JsonWeb/UploadServlet?";
-
-							imagePath = Environment
-									.getExternalStorageDirectory()
-									+ File.separator
-									+ "18888888888"
-									+ time
-									+ ".jpg";
+							// 上传图片、音频和视频
 							File fileImage = new File(imagePath);
-							// File file2 = new File(
-							// "/storage/emulated/0/rightTop.jpg");
-							// HttpUtil.uploadFile(file2,
-							// "http://pic.giscloud.ac.cn");
 							HttpUtil.uploadFile(fileImage, uploadServerUrl);
 
-							// voicePath = Environment
-							// .getExternalStorageDirectory()
-							// + File.separator
-							// + "18888888888"
-							// + time
-							// + ".wav";
 							File fileVoice = new File(voicePath);
 							HttpUtil.uploadFile(fileVoice, uploadServerUrl);
 
-							// Your code goes here
-							// String imageFile1 = Environment
-							// .getExternalStorageState().equals(
-							// Environment.MEDIA_MOUNTED) ? Environment
-							// .getExternalStorageDirectory()
-							// + "/"
-							// + "leftTop" + ".jpg" : null;
-							// // File file = new
-							// // File("/storage/emulated/0/leftTop.jpg");
-							// File file1 = new File(imageFile1);
-							// HttpUtil.uploadFile(file1,
-							// "http://pic.giscloud.ac.cn");
-
-							String recordName = record_name.getText()
-									.toString().trim();
-							String detailinfo = ipInfo.getText().toString()
-									.trim();
-
-							// loginRemoteService("李四", "123");
-							// loginRemoteService(recordName, detailinfo);
-//							imagePath = "18888888888" + time + ".jpg";
-//							voicePath = "18888888888" + time + ".wav";
-//							videoPath = "18888888888" + time + ".mp4";
-
-							loginRemoteService("18888888888", strTimeVoice, imagePath,
+							// 上传数据库表格字段信息
+							loginRemoteService("18888888888", date, imagePath,
 									voicePath, videoPath);
 
 						} catch (Exception e) {
@@ -385,10 +299,9 @@ public class UploadActivity extends Activity implements OnClickListener {
 			ipInfo.setText("");
 			break;
 		case R.id.btn_titlebar_back:
-			// Intent intent = new Intent(UploadActivity.this,
-			// MapActivity.class);
-			// startActivity(intent);
-			// UploadActivity.this.finish();
+			Intent intent = new Intent(UploadActivity.this, LoginActivity.class);
+			startActivity(intent);
+			UploadActivity.this.finish();
 			break;
 		default:
 			break;
@@ -412,8 +325,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 			// 远程登录URL
 			// 下面这句是原有的
 			// processURL=processURL+"userName="+userName+"&password="+password;
-			urlParameters = url_constant_field + "phoneNumber=" + phonenumber
-					+ "&time=" + strTimeVoice + "&imagePath=" + imagePath
+			urlParameters = url_constant_parameters + "phoneNumber="
+					+ phonenumber + "&time=" + time + "&imagePath=" + imagePath
 					+ "&voicePath=" + voicePath + "&videoPath=" + videoPath;
 			Log.d("远程URL", urlParameters);
 			// 创建HttpGet对象
