@@ -116,6 +116,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 
 	AudioSourceMic mAudioSourceMic = new AudioSourceMic();
 
+	private ApplicationParameters appPara;
+
 	// 处理消息，让主界面提示上传成功
 	private Handler handler = new Handler() {
 		@Override
@@ -208,7 +210,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 			startActivity(picture);
 			break;
 		case R.id.record_bt:
-			
+
 			if (mStartRecording) {
 				timeVoice.setToNow();
 				strTimeVoice = timeVoice.format("%Y%m%d%H%M%S");
@@ -219,7 +221,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 			} else {
 				record_bt.setText("开始录音");
 			}
-			
+
 			onRecord(mStartRecording);
 			mStartRecording = !mStartRecording;
 			break;
@@ -234,6 +236,12 @@ public class UploadActivity extends Activity implements OnClickListener {
 			// }
 			// mStartPlaying = !mStartPlaying;
 			// }
+			timeVideo.setToNow();
+			strTimeVideo = timeVideo.format("%Y%m%d%H%M%S");
+			videoPath = Environment.getExternalStorageDirectory()
+					+ File.separator + "18888888888" + strTimeVideo + ".mp4";
+			appPara = (ApplicationParameters) getApplication();
+			appPara.setvideoPath(videoPath);// 赋值操作
 			Intent videoIntent = new Intent(UploadActivity.this,
 					VideoActivity.class);
 			startActivity(videoIntent);
@@ -282,6 +290,9 @@ public class UploadActivity extends Activity implements OnClickListener {
 
 							File fileVoice = new File(voicePath);
 							HttpUtil.uploadFile(fileVoice, uploadServerUrl);
+
+							File fileVideo = new File(videoPath);
+							HttpUtil.uploadFile(fileVideo, uploadServerUrl);
 
 							// 上传数据库表格字段信息
 							loginRemoteService("18888888888", date, imagePath,
@@ -414,7 +425,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 			mPlayer.setOnCompletionListener(new OnCompletionListener() {
 				@Override
 				public void onCompletion(MediaPlayer mp) {
-					mPlayButton.setText("开始播放");
+					mPlayButton.setText("录制视频");
 					mStartPlaying = !mStartPlaying;
 				}
 			});
