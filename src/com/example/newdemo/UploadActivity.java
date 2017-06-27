@@ -222,16 +222,21 @@ public class UploadActivity extends Activity implements OnClickListener {
 			mStartRecording = !mStartRecording;
 			break;
 		case R.id.play_bt:
-			if (!(record_name.getText().equals(""))
-					&& (record_name.getText().toString().trim() != null)) {
-				onPlay(mStartPlaying);
-				if (mStartPlaying) {
-					mPlayButton.setText("停止播放");
-				} else {
-					mPlayButton.setText("开始播放");
-				}
-				mStartPlaying = !mStartPlaying;
-			}
+//			if (!(record_name.getText().equals(""))
+//					&& (record_name.getText().toString().trim() != null)) {
+//				onPlay(mStartPlaying);
+//				if (mStartPlaying) {
+//					mPlayButton.setText("停止播放");
+//				} else {
+//					mPlayButton.setText("开始播放");
+//				}
+//				mStartPlaying = !mStartPlaying;
+//			}
+			Intent videoIntent = new Intent(UploadActivity.this, VideoActivity.class);
+			startActivity(videoIntent);
+			UploadActivity.this.finish();
+			
+			
 			break;
 		case R.id.send_bt:
 			// if (!(image.getDrawable() == null)
