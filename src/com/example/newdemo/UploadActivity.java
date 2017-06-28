@@ -246,7 +246,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 			Intent videoIntent = new Intent(UploadActivity.this,
 					VideoActivity.class);
 			startActivity(videoIntent);
-			UploadActivity.this.finish();
+//			UploadActivity.this.finish();
 
 			break;
 		case R.id.send_bt:
