@@ -75,6 +75,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 	private ImageView image;
 	private EditText ipInfo;
 	private TextView record_name;
+	private TextView videoTextView;
 	// private Spinner type_sp, question_sp;
 
 	// Spinner中的内容数组
@@ -116,6 +117,10 @@ public class UploadActivity extends Activity implements OnClickListener {
 	String voicePath;
 	String videoPath;
 	String recordCode;
+
+	String imageName;
+	String voiceName;
+	String videoName;
 
 	AudioSourceMic mAudioSourceMic = new AudioSourceMic();
 
@@ -175,7 +180,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 		image = (ImageView) findViewById(R.id.image);
 		image.setOnClickListener(this);
 		ipInfo = (EditText) findViewById(R.id.ipInfo);
-
+		videoTextView = (TextView) findViewById(R.id.videoTextView);
+		
 		ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(
 				UploadActivity.this, android.R.layout.simple_spinner_item,
 				typeArray);
@@ -203,7 +209,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 			strTimeImage = timeImage.format("%Y%m%d%H%M%S");
 			imagePath = Environment.getExternalStorageDirectory()
 					+ File.separator + "18888888888" + strTimeImage + ".jpg";
-
+			imageName = "18888888888" + strTimeImage + ".jpg";
 			invokSystemCamera();
 			break;
 		case R.id.image:
@@ -220,9 +226,10 @@ public class UploadActivity extends Activity implements OnClickListener {
 				voicePath = Environment.getExternalStorageDirectory()
 						+ File.separator + "18888888888" + strTimeVoice
 						+ ".wav";
-				record_bt.setText("停止录音");
+				voiceName="18888888888" + strTimeVoice+ ".wav";
+				record_bt.setText("停止");
 			} else {
-				record_bt.setText("开始录音");
+				record_bt.setText("录音");
 			}
 
 			onRecord(mStartRecording);
@@ -243,6 +250,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 			strTimeVideo = timeVideo.format("%Y%m%d%H%M%S");
 			videoPath = Environment.getExternalStorageDirectory()
 					+ File.separator + "18888888888" + strTimeVideo + ".mp4";
+			videoName="18888888888" + strTimeVideo + ".mp4";
 			appPara = (ApplicationParameters) getApplicationContext();
 			appPara.setvideoPath(videoPath);// 赋值操作
 			String vp = appPara.getvideoPath();
@@ -251,6 +259,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 			startActivity(videoIntent);
 			// UploadActivity.this.finish();
 
+			videoTextView.setText(videoName);
 			break;
 		case R.id.send_bt:
 			// if (!(image.getDrawable() == null)
@@ -303,8 +312,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 							HttpUtil.uploadFile(fileVideo, uploadServerUrl);
 
 							// 上传数据库表格字段信息
-							loginRemoteService(recordCode, date, imagePath,
-									voicePath, videoPath);
+							loginRemoteService(recordCode, date, imageName,
+									voiceName, videoName);
 
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -434,7 +443,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 			mPlayer.setOnCompletionListener(new OnCompletionListener() {
 				@Override
 				public void onCompletion(MediaPlayer mp) {
-					mPlayButton.setText("录制视频");
+					mPlayButton.setText("视频");
 					mStartPlaying = !mStartPlaying;
 				}
 			});
@@ -495,7 +504,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 		// record_name.setText(file.getName());
 
 		mAudioSourceMic.Close();
-		record_name.setText(mAudioSourceMic.mRecordfile);
+//		record_name.setText(mAudioSourceMic.mRecordfile);
+		record_name.setText(voiceName);
 	}
 
 	@Override

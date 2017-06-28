@@ -178,7 +178,7 @@ public final class R {
         public static final int trans=0x7f020022;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b002a;
+        public static final int action_settings=0x7f0b002b;
         public static final int bmapView=0x7f0b0014;
         public static final int bt_login=0x7f0b000b;
         public static final int bt_register=0x7f0b000c;
@@ -199,8 +199,8 @@ public final class R {
         public static final int ib_delete_phone=0x7f0b0007;
         public static final int image=0x7f0b0023;
         public static final int imageview=0x7f0b0001;
-        public static final int ipInfo=0x7f0b0028;
-        public static final int ip_bt=0x7f0b0027;
+        public static final int ipInfo=0x7f0b0029;
+        public static final int ip_bt=0x7f0b0028;
         public static final int iv_logo=0x7f0b0005;
         public static final int layout_titlebar=0x7f0b000d;
         public static final int login_bt=0x7f0b0013;
@@ -212,7 +212,7 @@ public final class R {
         public static final int record_name=0x7f0b0025;
         public static final int remeber_pswd=0x7f0b0012;
         public static final int request=0x7f0b0015;
-        public static final int send_bt=0x7f0b0029;
+        public static final int send_bt=0x7f0b002a;
         public static final int surfaceview=0x7f0b0000;
         public static final int takePhoto_bt=0x7f0b0022;
         public static final int tel_et=0x7f0b000f;
@@ -220,6 +220,7 @@ public final class R {
         public static final int text=0x7f0b0004;
         public static final int tv_forget_pwd=0x7f0b000a;
         public static final int tv_titlebar_title=0x7f0b0021;
+        public static final int videoTextView=0x7f0b0027;
         public static final int zoom_image_view=0x7f0b0016;
     }
     public static final class layout {
