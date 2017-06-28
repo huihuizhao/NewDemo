@@ -106,13 +106,16 @@ public class UploadActivity extends Activity implements OnClickListener {
 	Time timeImage = new Time();
 	Time timeVoice = new Time();
 	Time timeVideo = new Time();
+	Time timeSubmit = new Time();
 	String strTimeImage;
 	String strTimeVoice;
 	String strTimeVideo;
+	String strTimeSubmit;
 
 	String imagePath;
 	String voicePath;
 	String videoPath;
+	String recordCode;
 
 	AudioSourceMic mAudioSourceMic = new AudioSourceMic();
 
@@ -242,11 +245,11 @@ public class UploadActivity extends Activity implements OnClickListener {
 					+ File.separator + "18888888888" + strTimeVideo + ".mp4";
 			appPara = (ApplicationParameters) getApplicationContext();
 			appPara.setvideoPath(videoPath);// 赋值操作
-			String vp=appPara.getvideoPath();
+			String vp = appPara.getvideoPath();
 			Intent videoIntent = new Intent(UploadActivity.this,
 					VideoActivity.class);
 			startActivity(videoIntent);
-//			UploadActivity.this.finish();
+			// UploadActivity.this.finish();
 
 			break;
 		case R.id.send_bt:
@@ -264,22 +267,26 @@ public class UploadActivity extends Activity implements OnClickListener {
 
 				showProgressDialog();
 
-				totleInfo.append(type_str).append(',').append(question_str)
-						.append(',').append(ipInfo.getText().toString());
-				totle_str = totleInfo.toString().trim();
-				Timer timer = new Timer();
-				timer.schedule(new TimerTask() {
-					@Override
-					public void run() {
-						dialog.dismiss();
-						// Intent intent = new Intent(UploadActivity.this,
-						// MapActivity.class);
-						// startActivity(intent);
-						// UploadActivity.this.finish();
-						Message msg = new Message();
-						handler.sendMessage(msg);
-					}
-				}, 5000);
+				// totleInfo.append(type_str).append(',').append(question_str)
+				// .append(',').append(ipInfo.getText().toString());
+				// totle_str = totleInfo.toString().trim();
+				// Timer timer = new Timer();
+				// timer.schedule(new TimerTask() {
+				// @Override
+				// public void run() {
+				// dialog.dismiss();
+				// // Intent intent = new Intent(UploadActivity.this,
+				// // MapActivity.class);
+				// // startActivity(intent);
+				// // UploadActivity.this.finish();
+				// Message msg = new Message();
+				// handler.sendMessage(msg);
+				// }
+				// }, 5000);
+
+				timeSubmit.setToNow();
+				strTimeSubmit = timeSubmit.format("%Y%m%d%H%M%S");
+				recordCode = "18888888888" + strTimeSubmit;
 
 				Thread thread = new Thread(new Runnable() {
 					@Override
@@ -296,7 +303,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 							HttpUtil.uploadFile(fileVideo, uploadServerUrl);
 
 							// 上传数据库表格字段信息
-							loginRemoteService("18888888888", date, imagePath,
+							loginRemoteService(recordCode, date, imagePath,
 									voicePath, videoPath);
 
 						} catch (Exception e) {
@@ -308,7 +315,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 				thread.start();
 
 			} else {
-				MyToast.showToast(UploadActivity.this, "请设置各项数据");
+				MyToast.showToast(UploadActivity.this,
+						"请上传照片、音频、视频各项数据，并设置服务器IP地址");
 			}
 			break;
 		case R.id.btn_titlebar_right:
@@ -333,7 +341,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 	 * @param userName
 	 * @param password
 	 */
-	public void loginRemoteService(String phonenumber, String time,
+	public void loginRemoteService(String phoneNumber, String date,
 			String imagePath, String voicePath, String videoPath) {
 		// public void loginRemoteService(String userName, String password) {
 		String result = null;
@@ -345,7 +353,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 			// 下面这句是原有的
 			// processURL=processURL+"userName="+userName+"&password="+password;
 			urlParameters = url_constant_parameters + "phoneNumber="
-					+ phonenumber + "&time=" + time + "&imagePath=" + imagePath
+					+ phoneNumber + "&date=" + date + "&imagePath=" + imagePath
 					+ "&voicePath=" + voicePath + "&videoPath=" + videoPath;
 			Log.d("远程URL", urlParameters);
 			// 创建HttpGet对象
@@ -610,10 +618,9 @@ public class UploadActivity extends Activity implements OnClickListener {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			 Intent intent = new Intent(UploadActivity.this,
-			 LoginActivity.class);
-			 startActivity(intent);
-			 UploadActivity.this.finish();
+			Intent intent = new Intent(UploadActivity.this, LoginActivity.class);
+			startActivity(intent);
+			UploadActivity.this.finish();
 		}
 		return false;
 	}
