@@ -240,8 +240,9 @@ public class UploadActivity extends Activity implements OnClickListener {
 			strTimeVideo = timeVideo.format("%Y%m%d%H%M%S");
 			videoPath = Environment.getExternalStorageDirectory()
 					+ File.separator + "18888888888" + strTimeVideo + ".mp4";
-			appPara = (ApplicationParameters) getApplication();
+			appPara = (ApplicationParameters) getApplicationContext();
 			appPara.setvideoPath(videoPath);// 赋值操作
+			String vp=appPara.getvideoPath();
 			Intent videoIntent = new Intent(UploadActivity.this,
 					VideoActivity.class);
 			startActivity(videoIntent);
@@ -609,10 +610,10 @@ public class UploadActivity extends Activity implements OnClickListener {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			// Intent intent = new Intent(UploadActivity.this,
-			// MapActivity.class);
-			// startActivity(intent);
-			// UploadActivity.this.finish();
+			 Intent intent = new Intent(UploadActivity.this,
+			 LoginActivity.class);
+			 startActivity(intent);
+			 UploadActivity.this.finish();
 		}
 		return false;
 	}

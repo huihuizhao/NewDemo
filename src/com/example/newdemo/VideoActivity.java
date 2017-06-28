@@ -1,6 +1,7 @@
 package com.example.newdemo;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.hardware.Camera;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -9,6 +10,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -124,9 +126,12 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback {
 						// dir.mkdir();
 						// }
 						// path = dir + "/" + getDate() + ".mp4";
-						path = appPara.getvideoPath();
+						path="/storage/emulated/0/1888888888820170628072031.mp4";
+//						path = appPara.getvideoPath();
 						// path = ((ApplicationParameters)
 						// getApplication()).getvideoPath();
+						appPara = (ApplicationParameters) getApplicationContext();
+						String path=appPara.getvideoPath();
 						System.out.println(path);
 						mRecorder.setOutputFile(path);
 						mRecorder.prepare();
@@ -263,6 +268,18 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback {
 			mediaPlayer.release();
 			mediaPlayer = null;
 		}
+	}
+	
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			 Intent intent = new Intent(VideoActivity.this,
+			 UploadActivity.class);
+			 startActivity(intent);
+			 VideoActivity.this.finish();
+		}
+		return false;
 	}
 
 }

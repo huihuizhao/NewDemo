@@ -45,7 +45,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_alignParentLeft="true"
-		        android:text="开始录音" />
+		        android:text="录音" />
 	        
 	        <TextView
 	            android:id="@+id/record_name"
@@ -65,12 +65,12 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_alignParentLeft="true"
-		        android:text="开始播放" />
+		        android:text="视频" />
 	        
 	        <TextView
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="此按钮可检查录音是否成功"
+		        android:text="点击按钮录制视频"
 		        android:layout_centerInParent="true"
 		        android:layout_centerHorizontal="true"
 		        android:layout_toRightOf="@+id/play_bt"/>
