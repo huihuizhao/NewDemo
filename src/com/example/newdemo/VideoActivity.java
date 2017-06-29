@@ -85,6 +85,7 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback {
 					camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);//前置摄像头录像
 					if (camera != null) {
 						camera.setDisplayOrientation(90);
+
 						camera.unlock();
 						mRecorder.setCamera(camera);
 					}
@@ -115,7 +116,9 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback {
 						mRecorder.setVideoSize(640, 480);
 						mRecorder.setVideoFrameRate(30);
 						mRecorder.setVideoEncodingBitRate(3 * 1024 * 1024);
-						mRecorder.setOrientationHint(90);
+//						2.1竖屏情况下： 
+//						如果是前置摄像头： 
+						mRecorder.setOrientationHint(270); //翻转
 						// 设置记录会话的最大持续时间（毫秒）
 						mRecorder.setMaxDuration(30 * 1000);
 						mRecorder.setPreviewDisplay(mSurfaceHolder.getSurface());
