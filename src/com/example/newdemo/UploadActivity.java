@@ -268,9 +268,9 @@ public class UploadActivity extends Activity implements OnClickListener {
 			if (!(record_name.getText().toString().trim().equals(""))) {
 				String ip = ipInfo.getText().toString();
 
-				urlParameters = "http://" + ip + ":8080/JsonWeb/login.action?";
+				urlParameters = "http://" + ip + ":8080/JsonWeb/Insert.action?";
 				url_constant_parameters = "http://" + ip
-						+ ":8080/JsonWeb/login.action?";
+						+ ":8080/JsonWeb/Insert.action?";
 				uploadServerUrl = "http://" + ip
 						+ ":8080/JsonWeb/UploadServlet?";
 
@@ -312,7 +312,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 							HttpUtil.uploadFile(fileVideo, uploadServerUrl);
 
 							// 上传数据库表格字段信息
-							loginRemoteService(recordCode, date, imageName,
+							InsertToDatabaseService(recordCode, date, imageName,
 									voiceName, videoName);
 
 						} catch (Exception e) {
@@ -350,7 +350,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 	 * @param userName
 	 * @param password
 	 */
-	public void loginRemoteService(String phoneNumber, String date,
+	public void InsertToDatabaseService(String phoneNumber, String date,
 			String imagePath, String voicePath, String videoPath) {
 		// public void loginRemoteService(String userName, String password) {
 		String result = null;
