@@ -57,6 +57,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private static String login_url = "http://192.168.1.101:8080/JsonWeb/login.action?";
 	private final String login_url_constant = "http://192.168.1.101:8080/JsonWeb/login.action?";
 
+	private ApplicationParameters appPara;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// /在Android2.2以后必须添加以下代码
@@ -215,6 +216,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 				Intent intent = new Intent(LoginActivity.this,
 						UploadActivity.class);
 				startActivity(intent);
+				appPara = (ApplicationParameters) getApplicationContext();
+				appPara.setphoneNumber(userName );// 赋值操作
+				
 				LoginActivity.this.finish();
 			} else {
 				MyToast.showToast(LoginActivity.this, "请输入正确的手机号或密码");

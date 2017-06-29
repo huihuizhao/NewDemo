@@ -127,7 +127,7 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback {
 						// dir.mkdir();
 						// }
 						// path = dir + "/" + getDate() + ".mp4";
-						path="/storage/emulated/0/1888888888820170628072031.mp4";
+//						path="/storage/emulated/0/1888888888820170628072031.mp4";
 //						path = appPara.getvideoPath();
 						// path = ((ApplicationParameters)
 						// getApplication()).getvideoPath();

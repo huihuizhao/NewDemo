@@ -125,6 +125,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 	AudioSourceMic mAudioSourceMic = new AudioSourceMic();
 
 	private ApplicationParameters appPara;
+	String currentPhoneNumber;
 
 	// 处理消息，让主界面提示上传成功
 	private Handler handler = new Handler() {
@@ -144,6 +145,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 
 		initModel();
 		initView();
+		appPara = (ApplicationParameters) getApplicationContext();
+		currentPhoneNumber = appPara.getphoneNumber();
 	}
 
 	private void initModel() {
@@ -181,7 +184,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 		image.setOnClickListener(this);
 		ipInfo = (EditText) findViewById(R.id.ipInfo);
 		videoTextView = (TextView) findViewById(R.id.videoTextView);
-		
+
 		ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(
 				UploadActivity.this, android.R.layout.simple_spinner_item,
 				typeArray);
@@ -208,8 +211,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 
 			strTimeImage = timeImage.format("%Y%m%d%H%M%S");
 			imagePath = Environment.getExternalStorageDirectory()
-					+ File.separator + "18888888888" + strTimeImage + ".jpg";
-			imageName = "18888888888" + strTimeImage + ".jpg";
+					+ File.separator + currentPhoneNumber + strTimeImage + ".jpg";
+			imageName = currentPhoneNumber + strTimeImage + ".jpg";
 			invokSystemCamera();
 			break;
 		case R.id.image:
@@ -224,9 +227,9 @@ public class UploadActivity extends Activity implements OnClickListener {
 				timeVoice.setToNow();
 				strTimeVoice = timeVoice.format("%Y%m%d%H%M%S");
 				voicePath = Environment.getExternalStorageDirectory()
-						+ File.separator + "18888888888" + strTimeVoice
+						+ File.separator + currentPhoneNumber + strTimeVoice
 						+ ".wav";
-				voiceName="18888888888" + strTimeVoice+ ".wav";
+				voiceName = currentPhoneNumber + strTimeVoice + ".wav";
 				record_bt.setText("停止");
 			} else {
 				record_bt.setText("录音");
@@ -249,11 +252,11 @@ public class UploadActivity extends Activity implements OnClickListener {
 			timeVideo.setToNow();
 			strTimeVideo = timeVideo.format("%Y%m%d%H%M%S");
 			videoPath = Environment.getExternalStorageDirectory()
-					+ File.separator + "18888888888" + strTimeVideo + ".mp4";
-			videoName="18888888888" + strTimeVideo + ".mp4";
-			appPara = (ApplicationParameters) getApplicationContext();
+					+ File.separator + currentPhoneNumber + strTimeVideo + ".mp4";
+			videoName = currentPhoneNumber + strTimeVideo + ".mp4";
+			// appPara = (ApplicationParameters) getApplicationContext();
 			appPara.setvideoPath(videoPath);// 赋值操作
-			String vp = appPara.getvideoPath();
+			// String vp = appPara.getvideoPath();
 			Intent videoIntent = new Intent(UploadActivity.this,
 					VideoActivity.class);
 			startActivity(videoIntent);
@@ -295,7 +298,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 
 				timeSubmit.setToNow();
 				strTimeSubmit = timeSubmit.format("%Y%m%d%H%M%S");
-				recordCode = "18888888888" + strTimeSubmit;
+				recordCode = currentPhoneNumber + strTimeSubmit;
 
 				Thread thread = new Thread(new Runnable() {
 					@Override
@@ -312,8 +315,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 							HttpUtil.uploadFile(fileVideo, uploadServerUrl);
 
 							// 上传数据库表格字段信息
-							InsertToDatabaseService(recordCode, date, imageName,
-									voiceName, videoName);
+							InsertToDatabaseService(recordCode, date,
+									imageName, voiceName, videoName);
 
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -504,7 +507,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 		// record_name.setText(file.getName());
 
 		mAudioSourceMic.Close();
-//		record_name.setText(mAudioSourceMic.mRecordfile);
+		// record_name.setText(mAudioSourceMic.mRecordfile);
 		record_name.setText(voiceName);
 	}
 
@@ -550,7 +553,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 			if (photoFile != null) {
 				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,
 						Uri.fromFile(photoFile));
-				cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1); // 调用前置摄像头 
+				cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1); // 调用前置摄像头
 				startActivityForResult(cameraIntent, UI_SYSTEM_CAMERA_BACK);
 			}
 		}
