@@ -81,7 +81,8 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback {
 						mRecorder = new MediaRecorder();
 					}
 
-					camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+//					camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);//后置摄像头
+					camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);//前置摄像头录像
 					if (camera != null) {
 						camera.setDisplayOrientation(90);
 						camera.unlock();

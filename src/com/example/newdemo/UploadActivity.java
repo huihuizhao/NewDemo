@@ -550,6 +550,7 @@ public class UploadActivity extends Activity implements OnClickListener {
 			if (photoFile != null) {
 				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,
 						Uri.fromFile(photoFile));
+				cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1); // 调用前置摄像头 
 				startActivityForResult(cameraIntent, UI_SYSTEM_CAMERA_BACK);
 			}
 		}
