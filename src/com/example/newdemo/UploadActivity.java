@@ -158,16 +158,17 @@ public class UploadActivity extends Activity implements OnClickListener {
 	private void initView() {
 		// 标题栏
 		RelativeLayout titleBar = (RelativeLayout) findViewById(R.id.layout_titlebar);
-		TextView center_tx = (TextView) titleBar
-				.findViewById(R.id.tv_titlebar_title);
-		center_tx.setText("报警");
-		Button rightBtn = (Button) titleBar
-				.findViewById(R.id.btn_titlebar_right);
-		rightBtn.setText("取消");
-		Button leftBtn = (Button) titleBar.findViewById(R.id.btn_titlebar_back);
-		leftBtn.setText("返回");
-		rightBtn.setOnClickListener(this);
-		leftBtn.setOnClickListener(this);
+		// TextView center_tx = (TextView) titleBar
+		// .findViewById(R.id.tv_titlebar_title);
+		// center_tx.setText("报警");
+		// Button rightBtn = (Button) titleBar
+		// .findViewById(R.id.btn_titlebar_right);
+		// rightBtn.setText("取消");
+		// Button leftBtn = (Button)
+		// titleBar.findViewById(R.id.btn_titlebar_back);
+		// leftBtn.setText("返回");
+		// rightBtn.setOnClickListener(this);
+		// leftBtn.setOnClickListener(this);
 
 		// type_sp = (Spinner) findViewById(R.id.type_spinner);
 		// question_sp = (Spinner) findViewById(R.id.question_spinner);
@@ -211,7 +212,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 
 			strTimeImage = timeImage.format("%Y%m%d%H%M%S");
 			imagePath = Environment.getExternalStorageDirectory()
-					+ File.separator + currentPhoneNumber + strTimeImage + ".jpg";
+					+ File.separator + currentPhoneNumber + strTimeImage
+					+ ".jpg";
 			imageName = currentPhoneNumber + strTimeImage + ".jpg";
 			invokSystemCamera();
 			break;
@@ -252,7 +254,8 @@ public class UploadActivity extends Activity implements OnClickListener {
 			timeVideo.setToNow();
 			strTimeVideo = timeVideo.format("%Y%m%d%H%M%S");
 			videoPath = Environment.getExternalStorageDirectory()
-					+ File.separator + currentPhoneNumber + strTimeVideo + ".mp4";
+					+ File.separator + currentPhoneNumber + strTimeVideo
+					+ ".mp4";
 			videoName = currentPhoneNumber + strTimeVideo + ".mp4";
 			// appPara = (ApplicationParameters) getApplicationContext();
 			appPara.setvideoPath(videoPath);// 赋值操作
@@ -265,10 +268,12 @@ public class UploadActivity extends Activity implements OnClickListener {
 			videoTextView.setText(videoName);
 			break;
 		case R.id.send_bt:
-			// if (!(image.getDrawable() == null)
-			// && !(record_name.getText().toString().trim().equals(""))
-			// && !(ipInfo.getText().toString().trim().equals(""))) {
-			if (!(record_name.getText().toString().trim().equals(""))) {
+			if (!(image.getDrawable() == null)
+					&& !(record_name.getText().toString().trim().equals(""))
+					&& !(videoTextView.getText().toString().trim().equals(""))
+					&& !(ipInfo.getText().toString().trim().equals(""))) {
+				// if (!(record_name.getText().toString().trim().equals("")))
+				// {
 				String ip = ipInfo.getText().toString();
 
 				urlParameters = "http://" + ip + ":8080/JsonWeb/Insert.action?";
@@ -331,17 +336,17 @@ public class UploadActivity extends Activity implements OnClickListener {
 						"请上传照片、音频、视频各项数据，并设置服务器IP地址");
 			}
 			break;
-		case R.id.btn_titlebar_right:
-			takephoto_bt.setText("拍照");
-			image.setImageBitmap(null);
-			record_name.setText("");
-			ipInfo.setText("");
-			break;
-		case R.id.btn_titlebar_back:
-			Intent intent = new Intent(UploadActivity.this, LoginActivity.class);
-			startActivity(intent);
-			UploadActivity.this.finish();
-			break;
+		// case R.id.btn_titlebar_right:
+		// takephoto_bt.setText("拍照");
+		// image.setImageBitmap(null);
+		// record_name.setText("");
+		// ipInfo.setText("");
+		// break;
+		// case R.id.btn_titlebar_back:
+		// Intent intent = new Intent(UploadActivity.this, LoginActivity.class);
+		// startActivity(intent);
+		// UploadActivity.this.finish();
+		// break;
 		default:
 			break;
 		}
@@ -388,6 +393,10 @@ public class UploadActivity extends Activity implements OnClickListener {
 			if (json != null) {
 				JSONObject jsonObject = new JSONObject(json);
 				result = jsonObject.get("message").toString();
+				dialog.dismiss();
+				Message msg = new Message();
+				handler.sendMessage(msg);
+
 			}
 			if (result == null) {
 				json = "登录失败请重新登录";

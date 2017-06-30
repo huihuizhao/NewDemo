@@ -62,10 +62,10 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		RelativeLayout titleBar = (RelativeLayout)findViewById(R.id.layout_titlebar);
 		TextView center_tx = (TextView)titleBar.findViewById(R.id.tv_titlebar_title);
 		center_tx.setText("注册");
-		Button rightBtn = (Button)titleBar.findViewById(R.id.btn_titlebar_right);
-		rightBtn.setText("登录");
-		Button leftBtn = (Button)titleBar.findViewById(R.id.btn_titlebar_back);
-		leftBtn.setText("返回");
+//		Button rightBtn = (Button)titleBar.findViewById(R.id.btn_titlebar_right);
+//		rightBtn.setText("登录");
+//		Button leftBtn = (Button)titleBar.findViewById(R.id.btn_titlebar_back);
+//		leftBtn.setText("返回");
 		
 		et_phone = (EditText)findViewById(R.id.et_mobile);
 		et_code = (EditText)findViewById(R.id.et_code);
@@ -79,8 +79,8 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		btn_code.setOnClickListener(this);
 		btn_show.setOnClickListener(this);
 		btn_register.setOnClickListener(this);
-		rightBtn.setOnClickListener(this);
-		leftBtn.setOnClickListener(this);
+//		rightBtn.setOnClickListener(this);
+//		leftBtn.setOnClickListener(this);
 	}
 
 	@Override
@@ -121,12 +121,12 @@ public class RegisterActivity extends Activity implements OnClickListener {
 			showPswd = !showPswd;
 			setPswdVisibility(showPswd);
 			break;
-		case R.id.btn_titlebar_right:
-		case R.id.btn_titlebar_back:
-			Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-			startActivity(intent);
-			RegisterActivity.this.finish();
-			break;
+//		case R.id.btn_titlebar_right:
+//		case R.id.btn_titlebar_back:
+//			Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+//			startActivity(intent);
+//			RegisterActivity.this.finish();
+//			break;
 		default:
 			break;
 		}
