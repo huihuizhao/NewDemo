@@ -580,6 +580,12 @@ public class UploadActivity extends Activity implements OnClickListener {
 				// Environment.getExternalStorageDirectory()
 				// + "/18888888888" + strTimeVoice + ".jpg");
 				startPhotoZoom(Uri.fromFile(picture));
+				
+//				Bitmap photo = BitmapFactory.decodeFile(imagePath);
+				// photo.compress(CompressFormat.JPEG, 100, new
+				// FileOutputStream(file));
+//				image.setImageBitmap(photo);
+				
 				break;
 			case UI_PHOTO_ZOOM_BACK:
 				File file = new File(imagePath);

@@ -27,7 +27,7 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback {
 
 	private SurfaceView mSurfaceview;
 	private Button mBtnStartStop;
-	private Button mBtnPlay;
+//	private Button mBtnPlay;
 	private boolean mStartedFlg = false;// 是否正在录像
 	private boolean mIsPlay = false;// 是否正在播放录像
 	private MediaRecorder mRecorder;
@@ -60,7 +60,7 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback {
 		mSurfaceview = (SurfaceView) findViewById(R.id.surfaceview);
 		mImageView = (ImageView) findViewById(R.id.imageview);
 		mBtnStartStop = (Button) findViewById(R.id.btnStartStop);
-		mBtnPlay = (Button) findViewById(R.id.btnPlayVideo);
+//		mBtnPlay = (Button) findViewById(R.id.btnPlayVideo);
 		textView = (TextView) findViewById(R.id.text);
 		mBtnStartStop.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -169,27 +169,27 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback {
 			}
 		});
 
-		mBtnPlay.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				mIsPlay = true;
-				mImageView.setVisibility(View.GONE);
-				if (mediaPlayer == null) {
-					mediaPlayer = new MediaPlayer();
-				}
-				mediaPlayer.reset();
-				Uri uri = Uri.parse(path);
-				mediaPlayer = MediaPlayer.create(VideoActivity.this, uri);
-				mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-				mediaPlayer.setDisplay(mSurfaceHolder);
-				try {
-					mediaPlayer.prepare();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				mediaPlayer.start();
-			}
-		});
+		// mBtnPlay.setOnClickListener(new View.OnClickListener() {
+		// @Override
+		// public void onClick(View view) {
+		// mIsPlay = true;
+		// mImageView.setVisibility(View.GONE);
+		// if (mediaPlayer == null) {
+		// mediaPlayer = new MediaPlayer();
+		// }
+		// mediaPlayer.reset();
+		// Uri uri = Uri.parse(path);
+		// mediaPlayer = MediaPlayer.create(VideoActivity.this, uri);
+		// mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		// mediaPlayer.setDisplay(mSurfaceHolder);
+		// try {
+		// mediaPlayer.prepare();
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// mediaPlayer.start();
+		// }
+		// });
 
 		SurfaceHolder holder = mSurfaceview.getHolder();
 		holder.addCallback(this);
