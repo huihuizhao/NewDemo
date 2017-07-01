@@ -31,6 +31,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -45,9 +47,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private EditText et_pwd;
 	private ImageButton ib_delete_phone;
 	private CheckBox cb_eye;
-	private TextView tv_forget_pwd;
+//	private TextView tv_forget_pwd;
 	private Button bt_login;
-	private Button bt_register;
+//	private Button bt_register;
 
 	private SharedPreferences pref;
 	private SharedPreferences.Editor editor;
@@ -83,6 +85,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 				// .detectLeakedClosableObjects()
 				.penaltyLog().penaltyDeath().build());
 
+		requestWindowFeature(Window.FEATURE_NO_TITLE);  //无title  
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,  
+		              WindowManager.LayoutParams.FLAG_FULLSCREEN);  //全屏  
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 
@@ -90,13 +96,13 @@ public class LoginActivity extends Activity implements OnClickListener {
 		et_pwd = (EditText) findViewById(R.id.et_pwd);
 		ib_delete_phone = (ImageButton) findViewById(R.id.ib_delete_phone);
 		cb_eye = (CheckBox) findViewById(R.id.cb_eye);
-		tv_forget_pwd = (TextView) findViewById(R.id.tv_forget_pwd);
+//		tv_forget_pwd = (TextView) findViewById(R.id.tv_forget_pwd);
 		bt_login = (Button) findViewById(R.id.bt_login);
-		bt_register = (Button) findViewById(R.id.bt_register);
+//		bt_register = (Button) findViewById(R.id.bt_register);
 
 		bt_login.setOnClickListener(this);
-		bt_register.setOnClickListener(this);
-		tv_forget_pwd.setOnClickListener(this);
+//		bt_register.setOnClickListener(this);
+//		tv_forget_pwd.setOnClickListener(this);
 		ib_delete_phone.setOnClickListener(this);
 
 		// remeber_pswd = (CheckBox)findViewById(R.id.remeber_pswd);
@@ -161,15 +167,15 @@ public class LoginActivity extends Activity implements OnClickListener {
 			// loginRemoteService(phoneNumber, password);
 			break;
 		// 注册
-		case R.id.bt_register:
+//		case R.id.bt_register:
 			// intent.setClass(this, LoginRegisterActivity.class);
 			// startActivity(intent);
-			break;
+//			break;
 		// 忘记密码
-		case R.id.tv_forget_pwd:
+//		case R.id.tv_forget_pwd:
 			// intent.setClass(this, ForgetPwdActivity.class);
 			// startActivity(intent);
-			break;
+//			break;
 		// 删除手机号
 		case R.id.ib_delete_phone:
 			et_phone.setText("");
