@@ -17,4 +17,19 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     
+    
+    <style name="common_button_style">  
+        <item name="android:layout_width">match_parent</item>  
+        <item name="android:layout_height">match_parent</item>  
+        <item name="android:background">@drawable/selector_orange_corners_button</item>  
+        <item name="android:padding">6.0dip</item>  
+        <item name="android:textColor">@android:color/white</item>  
+        <item name="android:textSize">20dip</item>  
+        <item name="android:layout_gravity">center_horizontal</item>  
+          
+    </style>  
+    
+
+    
+    
 </resources>

@@ -178,9 +178,25 @@ public final class R {
         public static final int logo13=0x7f020022;
         public static final int logo14=0x7f020023;
         public static final int pkulogo=0x7f020024;
-        public static final int shape_corner=0x7f020025;
-        public static final int trans=0x7f020027;
-        public static final int txtborder=0x7f020026;
+        public static final int selector_blue_corners_button=0x7f020025;
+        public static final int selector_green_corners_button=0x7f020026;
+        public static final int selector_orange_corners_button=0x7f020027;
+        public static final int selector_red_corners_button=0x7f020028;
+        public static final int selector_wine_corners_button=0x7f020029;
+        public static final int shape_blue_corners_button=0x7f02002a;
+        public static final int shape_blue_corners_button_pressed=0x7f02002b;
+        public static final int shape_corner=0x7f02002c;
+        public static final int shape_corner_button=0x7f02002d;
+        public static final int shape_green_corners_button=0x7f02002e;
+        public static final int shape_green_corners_button_pressed=0x7f02002f;
+        public static final int shape_orange_corners_button=0x7f020030;
+        public static final int shape_orange_corners_button_pressed=0x7f020031;
+        public static final int shape_red_corners_button=0x7f020032;
+        public static final int shape_red_corners_button_pressed=0x7f020033;
+        public static final int shape_wine_corners_button=0x7f020034;
+        public static final int shape_wine_corners_button_pressed=0x7f020035;
+        public static final int trans=0x7f020037;
+        public static final int txtborder=0x7f020036;
     }
     public static final class id {
         public static final int action_settings=0x7f0b0028;
@@ -270,5 +286,6 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f090001;
+        public static final int common_button_style=0x7f090002;
     }
 }
