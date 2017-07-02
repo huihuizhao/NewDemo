@@ -109,6 +109,7 @@
                 android:id="@+id/ipInfo"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dip"
                 android:layout_toRightOf="@+id/ip_bt"
                 android:focusable="true"
                 android:hint="请输入服务器ip地址"
@@ -122,6 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="2dip"
+            android:layout_marginRight="2dip"
             android:layout_marginTop="6dip"
             android:background="@drawable/selector_wine_corners_button"
             android:text="@string/send" />
