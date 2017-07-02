@@ -276,11 +276,11 @@ public class UploadActivity extends Activity implements OnClickListener {
 				// {
 				String ip = ipInfo.getText().toString();
 
-				urlParameters = "http://" + ip + ":8080/JsonWeb/Insert.action?";
+				urlParameters = "http://" + ip + ":8080/IHASWeb/Insert.action?";
 				url_constant_parameters = "http://" + ip
-						+ ":8080/JsonWeb/Insert.action?";
+						+ ":8080/IHASWeb/Insert.action?";
 				uploadServerUrl = "http://" + ip
-						+ ":8080/JsonWeb/UploadServlet?";
+						+ ":8080/IHASWeb/UploadServlet?";
 
 				showProgressDialog();
 
